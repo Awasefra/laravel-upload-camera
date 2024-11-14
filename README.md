@@ -1,66 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Kamera dan Pengunggahan Gambar di Browser
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proyek ini menyediakan dua metode untuk mengakses dan mengunggah gambar dari kamera pada perangkat mobile atau desktop menggunakan HTML dan JavaScript:
 
-## About Laravel
+1. **Input File Kamera (Capture dari Browser)**
+2. **HTML5 Camera API (Menggunakan `getUserMedia()`)**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Dengan dua metode ini, pengguna dapat memilih cara yang paling sesuai untuk mengambil gambar, baik melalui input file yang sederhana atau dengan fitur canggih dari HTML5 Camera API untuk tampilan video langsung dan pengaturan kamera.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Input File Kamera (Capture dari Browser)
+HTML menyediakan input tipe file dengan atribut `capture="camera"` untuk membuka kamera pada perangkat mobile. Fitur ini bekerja sebagai berikut:
 
-## Learning Laravel
+- **Ambil Gambar**: Ketika pengguna mengklik tombol **Ambil Gambar**, fungsi `openCamera()` akan membuka kamera atau galeri perangkat.
+- **Pratinjau Gambar**: Setelah gambar diambil, event `change` pada elemen input membaca file gambar dan menggunakan `FileReader` untuk menampilkan pratinjau gambar di halaman.
+- **Kelebihan**: Sederhana dan didukung secara luas di berbagai perangkat dan browser.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. HTML5 Camera API (Menggunakan `getUserMedia()`)
+HTML5 Camera API menggunakan `navigator.mediaDevices.getUserMedia()` untuk mengakses kamera perangkat secara langsung. Fitur ini memberikan lebih banyak fleksibilitas, termasuk:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Live Preview**: Stream video langsung dari kamera ditampilkan dalam elemen `<video>`.
+- **Ambil Snapshot**: Fungsi `take_snapshot_getUserMedia()` memungkinkan pengguna untuk mengambil gambar dari video live.
+  - Mengatur resolusi canvas dengan lebar maksimum 720 piksel.
+  - Mengonversi gambar dari video menjadi data gambar berbentuk base64.
+  - Menyimpan data base64 dalam elemen `<input type="hidden">` untuk keperluan pengunggahan ke server.
+- **Ganti Kamera**: Fungsi `toggleCamera()` memungkinkan pengguna beralih antara kamera depan dan belakang dengan mengubah properti `facingMode`.
+  
+#### Cara Kerja HTML5 Camera API
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Mengakses Kamera**: 
+   - Menggunakan `navigator.mediaDevices.getUserMedia()` untuk meminta izin akses kamera.
+   - Properti `facingMode` pada opsi video digunakan untuk memilih kamera depan (`user`) atau belakang (`environment`).
+2. **Pengambilan Gambar (Snapshot)**:
+   - Dengan menggunakan elemen `canvas`, gambar dapat diambil dari video stream dan diubah menjadi format base64, memungkinkan untuk disimpan atau diunggah ke server.
 
-## Laravel Sponsors
+## Cara Menggunakan
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prasyarat
+- Browser yang mendukung HTML5 dan `getUserMedia` API.
+- Perangkat dengan kamera untuk mencoba fitur-fitur ini.
 
-### Premium Partners
+### Instalasi
+Tidak diperlukan instalasi tambahan. Cukup buka file HTML di browser untuk mencoba fitur-fitur ini.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Penggunaan
 
-## Contributing
+1. **Metode Input File Kamera**:
+   - Klik tombol **Ambil Gambar** untuk membuka kamera atau galeri.
+   - Pilih atau ambil gambar, dan gambar akan ditampilkan sebagai pratinjau.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Metode HTML5 Camera API**:
+   - Klik **Buka Kamera** untuk mengaktifkan video live dari kamera.
+   - Gunakan **Ambil Snapshot** untuk mengambil gambar dari stream video.
+   - Klik **Ganti Kamera** untuk beralih antara kamera depan dan belakang (hanya pada perangkat yang mendukung fitur ini).
 
-## Code of Conduct
+## Catatan Tambahan
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Metode Input File Kamera mungkin lebih kompatibel di berbagai perangkat mobile, sedangkan HTML5 Camera API lebih fleksibel namun membutuhkan izin khusus dari pengguna.
+- Untuk keamanan, pastikan perangkat memiliki izin akses kamera diaktifkan untuk browser.
 
-## Security Vulnerabilities
+## Dukungan Browser
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+HTML5 Camera API (`getUserMedia()`) didukung pada sebagian besar browser modern seperti Chrome, Firefox, dan Edge. Namun, dukungan di perangkat iOS dan Safari mungkin terbatas atau membutuhkan versi terbaru.
 
-## License
+## Lisensi
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
