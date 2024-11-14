@@ -1,3 +1,32 @@
+
+# Installations
+
+## Create & Update env File
+
+```
+cp .env.example .env
+```
+
+###
+
+## Generate project key
+
+```
+php artisan key:generate
+```
+
+## Link Storage
+
+```
+php artisan storage:link
+```
+
+### Launch Apps
+
+```
+php artisan serve
+```
+
 # Kamera dan Pengunggahan Gambar di Browser
 
 Proyek ini menyediakan dua metode untuk mengakses dan mengunggah gambar dari kamera pada perangkat mobile atau desktop menggunakan HTML dan JavaScript:
